@@ -9,7 +9,7 @@ The project demonstrates how Natural Language Processing (NLP) can be applied to
 🔍 Sentiment Analysis – Classifies news as Positive, Neutral, or Negative with confidence percentage.<br>
 📑 Summarization – Extracts concise summaries from lengthy news content.<br>
 🗝 Keyword Extraction – Identifies important keywords and entities from the text.<br>
-🔒 User Authentication – Secure login/logout system using Flask sessions.<br>
+🔒 User Authentication – Secure login/logout system using Flask sessions.(default username:admin, password:123)<br>
 
 # Installation & Setup:
 <br>
