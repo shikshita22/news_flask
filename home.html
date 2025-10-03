@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - NewsLens</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="header">
+        <div>NEWSLENS</div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <div class="dropdown">
+                <a>Analyze ▾</a>
+                <div class="dropdown-content">
+                    <a href="/analyze?mode=sentiment">Sentiment</a>
+                    <a href="/analyze?mode=summary">Summary</a>
+                    <a href="/analyze?mode=keywords">Keywords</a>
+                </div>
+            </div>
+            {% if session.get('authenticated') %}
+                <a href="/logout">Logout</a>
+            {% else %}
+                <a href="/login">Login</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="center-container">
+        <div class="big-quote">Uncover the sentiment behind the News</div>
+        <div class="small-quote">Analyze sentiment, extract keywords, and summarize articles.</div>
+        <form action="/login">
+            <button class="get-started-btn" type="submit">Get Started</button>
+        </form>
+    </div>
+
+    <div class="center-container">
+    <h2 style='text-align:center; margin-top:40px;'>KEY FEATURES</h2>
+    <div class="about-cards">
+        <div class="about-card"><h4>Sentiment Analysis</h4><p>Analyze if news is positive, negative, or neutral.</p></div>
+        <div class="about-card"><h4>News Summarization</h4><p>Get a quick summary of any article.</p></div>
+        <div class="about-card"><h4>Keyword Tracking</h4><p>Discover keywords and insights from the news.</p></div>
+    </div>
+    </div>
+
+</body>
+</html>

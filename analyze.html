@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Analyze - NewsLens</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        /* You can move this to style.css */
+        .result-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .result-card {
+            background: #f7f7f7;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            flex: 1;
+            background: linear-gradient(90deg,#270544,#4211a5);
+            max-width: 250px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">NewsLens</div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <div class="dropdown">
+                <a>Analyze ▾</a>
+                <div class="dropdown-content">
+                    <a href="/analyze?mode=sentiment">Sentiment</a>
+                    <a href="/analyze?mode=summary">Summary</a>
+                    <a href="/analyze?mode=keywords">Keywords</a>
+                </div>
+            </div>
+            <a href="/logout">Logout</a>
+        </div>
+    </div>
+
+    <!-- MODE HEADING AT TOP -->
+    <div class="page-heading">
+        {% if mode == "sentiment" %}
+        <div class="small-quote"><h1>Sentiment Analysis</h1></div>
+        {% elif mode == "summary" %}
+        <div class="small-quote"><h1>News Summary</h1></div>
+        {% elif mode == "keywords" %}
+        <div class="small-quote"><h1>Keyword Extraction</h1></div>
+        {% else %}
+            <h1>Analyze Your News</h1>
+        {% endif %}
+    </div>
+
+    <div class="center-container">
+        <p>Paste your news content below and click "Analyze"</p>
+        <form method="POST" action="/analyze">
+            <textarea name="news_content" class="news-textarea">{{ news_content or '' }}</textarea></br></br>
+            <button class="get-started-btn" type="submit">Analyze</button>
+        </form>
+    </div>
+
+    {% if result %}
+        <!-- ROW WITH SENTIMENT + PERCENTAGE SIDE BY SIDE -->
+        <div class="result-row" id="sentiment-row" style="display:none;">
+            <div class="result-card">
+                <h3>SENTIMENT</h3>
+                {% if result.sentiment == 'Positive' %} 😀 Positive
+                {% elif result.sentiment == 'Neutral' %} 😐 Neutral
+                {% else %} 😞 Negative
+                {% endif %}
+            </div>
+            <div class="result-card">
+                <h3>CONFIDENCE</h3>
+                <p>
+                    {% if result.polarity is not none %}
+                        {% set conf = (result.polarity * 100) | round(2) %}
+                        {% if result.sentiment == 'Neutral' %}
+                            Low confidence ({{ conf | abs }}%)
+                        {% else %}
+                            {{ conf | abs }}%
+                        {% endif %}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </p>
+        
+            </div>
+        </div>
+
+        <div class="result-box-centered" id="keywords-card" style="display:none;">
+            <h2>KEYWORD</h2>
+            <p>{{ result.keywords }}</p>
+        </div>
+
+        <div class="result-box-centered" id="summary-card" style="display:none;">
+            <h2>SUMMARY</h2>
+            <p>{{ result.summary }}</p>
+        </div>
+
+        <script>
+            const sentimentRow = document.getElementById("sentiment-row");
+            const keywordsCard = document.getElementById("keywords-card");
+            const summaryCard = document.getElementById("summary-card");
+        
+            const mode = "{{ mode }}";
+        
+            if(mode === "sentiment") {
+                sentimentRow.style.display = "flex";
+            } else if(mode === "keywords") {
+                keywordsCard.style.display = "block";
+            } else if(mode === "summary") {
+                summaryCard.style.display = "block";
+            }
+        </script>
+    {% endif %}
+</body>
+</html>
