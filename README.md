@@ -15,7 +15,8 @@ The project demonstrates how Natural Language Processing (NLP) can be applied to
 <br>
 Clone the repository:<br>
 git clone https://github.com/shikshita22/newslens.git<br>
-cd newslens<br>
+cd newslens
+<br>
 
 Run the Flask server:
 <br>
